@@ -12,6 +12,28 @@ void troca(int* a,int* b){
 	
 }
 
+void int_vet_start(int* vet,int tam){
+	int i;
+	for(i=0;i<tam;i++){
+		vet[i]= rand() %100;
+	}
+}
+
+void float_vet_start(float* vet,int tam){
+	int i;
+	for(i=0;i<tam;i++){
+		vet[i]= rand() %tam;
+	}
+}
+
+void double_vet_start(double* vet,int tam){
+	int i;
+	for(i=0;i<tam;i++){
+		vet[i]= rand() %tam;
+	}
+}
+
+
 void bubblesort(int array[],int n){
     int i,aux,continua,fim=n;
     do{
