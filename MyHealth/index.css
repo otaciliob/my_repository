@@ -2,4 +2,25 @@ body{
     background-image: url(assets/index_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    height: auto;
+    height: auto;
+    
+}
+body #content{
+    height: auto;
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+#content p{
+    font-size: 64px;
+    text-align: center;
+}
+
+#content button{
+    font-size: 32px;
+    padding: 8px;
 }
