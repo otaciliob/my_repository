@@ -1,4 +1,4 @@
-:root{
+*{
     --primary_color :#419ED7;
     --header_color :#8FE1D9;
     --background_color :#ADD4D0;
@@ -35,5 +35,6 @@ header{
 button{
     background-color: var(--primary_color);
     color: #ffffff;
-    font-family: var(--font);
+    border-style: solid var(--primary_color);
+    /*font-family: var(--font);*/
 }
