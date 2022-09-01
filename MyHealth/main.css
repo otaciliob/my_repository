@@ -22,9 +22,13 @@ header{
     align-items: center;    
 
     background-color: var(--header_color);
+
+    
+    padding-right: 8px;
 }
 
 .logo{
+    margin-left: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -36,5 +40,14 @@ button{
     background-color: var(--primary_color);
     color: #ffffff;
     border-style: solid var(--primary_color);
+    min-height: 25px;
     /*font-family: var(--font);*/
+}
+.buttons{
+    margin-right: 8px;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
 }
