@@ -17,14 +17,12 @@ body{
 header{
     display: flex;
     flex-direction: row;
-    height: 58px;
     justify-content: space-between;
     align-items: center;    
 
     background-color: var(--header_color);
-
-    
     padding-right: 8px;
+    height: 58px;
 }
 
 .logo{
@@ -38,7 +36,7 @@ header{
 
 button{
     background-color: var(--primary_color);
-    color: #ffffff;
+    color: #fff;
     border-style: solid var(--primary_color);
     min-height: 25px;
     /*font-family: var(--font);*/

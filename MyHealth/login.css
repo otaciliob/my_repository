@@ -1,19 +1,17 @@
 #content{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     margin-top: 300px;
 }
 form{
     display: block;
 }  
-
 label{
     color: #fff;
     font-size: 36px;
 }
-
 input{
     height: 50px;
     width: 500px;
