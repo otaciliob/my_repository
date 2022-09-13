@@ -1,0 +1,36 @@
+#content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 300px;
+}
+form{
+    display: flex;
+    flex-direction: row;
+}
+form>div{
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+} 
+.labels{
+    align-items: flex-end;
+}
+label{
+    color: #fff;
+    font-size: 36px;
+    margin: 10px;
+}
+input{
+    margin: 10px;
+    height: 40px;
+    width: 500px;
+    border: solid #fff;
+}
+.radios>*{
+    max-width: fit-content;
+    max-height: fit-content;
+
+    
+}

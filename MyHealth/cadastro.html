@@ -19,12 +19,23 @@
     <div id="content">
         <form action="login.html">  
             <div class="labels">
+                <label for="nome">Nome Completo</label>
+                <label for="radios">Sexo</label>
+                <label for="date">Data de Nascimento</label>
                 <label for="email">E-mail</label>
                 <label for="senha">Senha</label>
+                <label for="senha2">Repetir Senha</label>
             </div>         
             <div class="inputs">
+                <input type="text" id="nome">
+                <div class="radios">
+                    <input type="radio" name="sexo" id="male" value="masculino" class="radio_text"><label for="male">masculino</label>
+                    <input type="radio" name="sexo" id="female" value="feminino" class="radio_text"><label for="female">feminino</label>
+                </div>
+                <input type="date" name="" id="date ">
                 <input type="email" name="" id="email"><br><br>
                 <input type="password" name="" id="senha">
+                <input type="password" id="senha2">
             </div>                
         </form>
         <a href="login.html"><button>Entrar</button></a>
