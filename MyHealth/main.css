@@ -4,16 +4,15 @@
     --header_color :#C1E7E3;
     --background_color :#ADD4D0;
     --font :'Averia Libre';
+    --button_color :#49B976;
 
     font-family: var(--font);
     color: var(--primary_color);
 }
-
 body{
     margin: 0;
     background-color: var(--background_color);
 }
-
 header{
     display: flex;
     flex-direction: row;
@@ -24,7 +23,6 @@ header{
     padding-right: 8px;
     height: 58px;
 }
-
 .logo{
     margin-left: 5px;
     display: flex;
@@ -33,7 +31,14 @@ header{
     font-size: 40px ;
 
 }
-
+.logo>a{
+    margin-left: inherit;
+    display: inherit;
+    flex-direction: inherit;
+    align-items: inherit;
+    font-size: inherit;
+    text-decoration: none;
+}
 button{
     background-color: var(--primary_color);
     color: #fff;
@@ -43,4 +48,7 @@ button{
 }
 .buttons{
     margin-right: 8px;
+}
+input{
+    font-size: 36px;
 }
