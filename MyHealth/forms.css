@@ -28,6 +28,11 @@ input{
     width: 500px;
     border: solid #fff;
 }
+
+.radios{
+    display:inline-flex;
+    align-items: center;
+}
 .radios>*{
     max-width: fit-content;
     max-height: fit-content;
@@ -35,4 +40,9 @@ input{
 
 #recover{
     margin-top: 48px;
+}
+
+button{
+    background-color: var(--button_color);
+    font-size: 24px;
 }
