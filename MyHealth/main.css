@@ -2,7 +2,7 @@
     --primary_color :#419ED7;
     --index_header_color :#8FE1D9;
     --header_color :#C1E7E3;
-    --background_color :#ADD5D0;
+    --background_color :#9DC5C0;
     --font :'Averia Libre';
     --button_color :#49B976;
 
@@ -29,7 +29,6 @@ header{
     flex-direction: row;
     align-items: center;
     font-size: 40px ;
-
 }
 .logo>a{
     margin-left: inherit;

@@ -2,17 +2,17 @@ body{
     background-image: url(assets/index_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100vh;
 }
 header{
     background-color: var(--index_header_color);
 }
-body #content{
+#content{
     display: flex;   
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    height: 300px;
-    margin-top: 100px;
+    height: 100%;
 }
 
 #content p{
