@@ -6,10 +6,11 @@
     height: 40px;
     background-color: white;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 #search>input{
-    width: 95%;
+    width: 97%;
     height: 40px;
     border: none;
 }
