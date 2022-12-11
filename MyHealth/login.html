@@ -9,6 +9,46 @@
     <link rel="stylesheet" href="forms.css">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>MyHealth</title>
+
+    <script type="module">
+
+        import {app, auth} from './config.js'
+        import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js"
+
+        window.onload  = () =>{
+            document.getElementById("btnEntrar").addEventListener('click', autenticarUsuario);
+        }
+        const getEmail = () =>{
+            return document.getElementById('email').value;
+        }
+        const getSenha = () =>{
+            return document.getElementById('senha').value;
+        }
+
+        const autenticarUsuario = () => {
+            const email = getEmail()
+            const senha = getSenha()
+
+            signInWithEmailAndPassword(auth, email, senha)
+            .then( (user) => {
+                console.log(JSON.stringify(user))
+                window.location.href = "./home.html"
+                document.getElementById("lblAviso").innerHTML = ""
+            })
+            .catch( (error) => {
+                console.log(error.code)
+                if (error.code === "auth/wrong-password")
+                    document.getElementById("lblAviso").innerHTML = "Senha incorreta"
+                else if(error.code === "auth/user-not-found")
+                    document.getElementById("lblAviso").innerHTML = "Usuário inválido"  
+                else
+                    document.getElementById("lblAviso").innerHTML = "Erro ao logar"
+            })
+            .finally( () => {
+
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -31,7 +71,8 @@
                 <input type="password" name="" id="senha">
             </div>
         </form>
-        <a href="home.html"><button>Entrar</button></a>
+        <a href="#"><button id="btnEntrar">Entrar</button></a>
+        <span id="lblAviso" style="color:red"> </span>
         <a href="recuperarsenha.html" style="font-size: 24px;" id="recover">Esqueci minha senha</a>
     </div>
 </body>

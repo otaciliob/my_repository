@@ -9,30 +9,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>Document</title>
-    <script>
+
+    <script type="module">
+
+        import { app, auth, db, storage } from './config.js';
+        import { signOut } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"
+        import { query, collection, onSnapshot, where, getDoc, doc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js"
+
+        var listaVacinas = [];
+        var email;
+
+        const carregarVacinas = () => {
+            //console.log(auth.currentUser.email);
+            const q = query(collection(db, "vacinas"), where("email", "==", email))
+
+            onSnapshot(q, (results) => {
+                listaVacinas = []
+                results.forEach((documento) => {
+                    listaVacinas.push({
+                        id: documento.id,
+                        nome: documento.data().vacina,
+                        dataVacina: documento.data().dataVacina,
+                        doseTipo: documento.data().doseTipo,
+                        proximaDose: documento.data().proximaDose
+                    })
+
+                })
+                showCards(listaVacinas);
+
+            })
+        }
+        const showCards = (lista) => {
+            document.getElementById("lista").innerHTML = ""
+            lista.forEach((documento) => {
+                document.getElementsByClassName("content")[0].appendChild(createCard(documento.nome, documento.dataVacina, documento.doseTipo, documento.proximaDose,documento.id))
+            })
+        }
+
+        const createCard = (nome, data1, dose, proximaDose,id) => {
+            let cards = document.createElement("div");
+            cards.setAttribute("class", "card");
+            cards.appendChild(document.createElement("a")).innerHTML = nome;
+            cards.children[0].setAttribute("href", "editarvacina.html?id="+id);
+            cards.children[0].setAttribute("class", "nome");
+            cards.appendChild(document.createElement("div")).innerHTML = dose;
+            cards.children[1].setAttribute("class", "tipo_dose");
+            cards.appendChild(document.createElement("div")).innerHTML = data1;
+            cards.children[2].setAttribute("class", "data");
+            cards.appendChild(document.createElement("img")).setAttribute("src", "assets/image-comprovante.png");
+            cards.appendChild(document.createElement("div")).innerHTML = proximaDose;
+            cards.children[4].setAttribute("class", "proxima_dose");
 
 
+            return cards;
+        }
 
-        //document.body.getElementsByClassName("content")[0].appendChild(cards);
         window.onload = () => {
+            auth.onAuthStateChanged(function (user) {
+            if (!auth.currentUser)
+                window.location.href = "./login.html"
+            else
+                email = user.email
+                carregarVacinas()
+            })
+            document.getElementById("btnSair").addEventListener('click', deslogar)
+            document.getElementById("txtSearch").addEventListener('keyup', () => {
+                const searchString = document.getElementById("txtSearch").value.trim()
+                showCards(listaVacinas.filter(vac => vac.nome.includes(searchString)))
+            })
+            
+        }
 
-            for (let index = 0; index < 4; index++) {
-                let cards = document.createElement("div");
-                cards.setAttribute("class", "card");
-                cards.appendChild(document.createElement("a")).innerHTML = "NOME";
-                cards.children[0].setAttribute("href", "editarvacina.html");
-                cards.children[0].setAttribute("class", "nome");
-                cards.appendChild(document.createElement("div")).innerHTML = "Dose unica";
-                cards.children[1].setAttribute("class", "tipo_dose");
-                cards.appendChild(document.createElement("div")).innerHTML = "01/01/2000";
-                cards.children[2].setAttribute("class", "data");
-                cards.appendChild(document.createElement("img")).setAttribute("src", "assets/image-comprovante.png");
-                cards.appendChild(document.createElement("div")).innerHTML = "Não a proxima dose";
-                cards.children[4].setAttribute("class", "proxima_dose");
-                
-                document.getElementsByClassName("content")[0].appendChild(cards);
 
-            }
+
+        const deslogar = () => {
+            signOut(auth)
         }
 
     </script>
@@ -46,47 +97,17 @@
         </div>
         <div class="buttons">
             <a href="home.html"><button>Minhas Vacinas</button></a>
-            <a href="index.html"><button>Sair</button></a>
+            <button id="btnSair">Sair</button>
         </div>
     </header>
 
     <div id="search">
         <label for="search_bar"><img src="assets/icon-lupa.svg" alt=""></label>
-        <input type="search" name="pesquisar" id="search_bar" placeholder="Pesquisar Vacina" src="assets/icon-lupa.svg">
+        <input type="text" placeholder="Pesquisar..." id="txtSearch"/>
+        <!--<input type="search" name="pesquisar" id="search_bar" placeholder="Pesquisar Vacina" src="assets/icon-lupa.svg">-->
     </div>
 
-    <div class="content">
-        <!--
-            <div class="card">
-            <a href="editarvacina.html"><div class="nome">NOME</div></a>
-            <div class="tipo_dose">Dose unica</div>
-            <div class="data">01/01/2000</div>
-            <img src="assets/image-comprovante.png" alt="comprovante">
-            <div class="proxima_dose">Próxima dose em: 11/10/2000</div>
-        </div>
-        <div class="card">
-            <a href="editarvacina.html"><div class="nome">NOME</div></a>
-            <div class="tipo_dose">Dose unica</div>
-            <div class="data">01/01/2000</div>
-            <img src="assets/image-comprovante.png" alt="comprovante">
-            <div class="proxima_dose">Próxima dose em: 11/10/2000</div>
-        </div>
-        <div class="card">
-            <a href="editarvacina.html"><div class="nome">NOME</div></a>
-            <div class="tipo_dose">Dose unica</div>
-            <div class="data">01/01/2000</div>
-            <img src="assets/image-comprovante.png" alt="comprovante">
-            <div class="proxima_dose">Próxima dose em: 11/10/2000</div>
-        </div>
-        <div class="card">
-            <a href="editarvacina.html"><div class="nome">NOME</div></a>
-            <div class="tipo_dose">Dose unica</div>
-            <div class="data">01/01/2000</div>
-            <img src="assets/image-comprovante.png" alt="comprovante">
-            <div class="proxima_dose">Próxima dose em: 11/10/2000</div>
-        </div>
-        -->
-
+    <div class="content" id="lista">
 
     </div>
 

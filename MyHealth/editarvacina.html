@@ -9,6 +9,67 @@
     <link rel="stylesheet" href="forms.css">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>MyHealth</title>
+
+    <script type="module">
+        import { app, auth, db, storage } from './config.js';
+        import { signOut } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"
+        import { addDoc, collection, getDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+        
+
+        var email;
+        
+        const setNome =(nome)=>{
+            document.getElementById("nome").value = nome
+        }
+        const setDataVacina =(data1)=>{
+            document.getElementById("date").value = data1
+        }
+        const setDoseTipo =(doseTipo)=>{
+            document.getElementById(doseTipo).checked = true
+        }
+        const setProximaDose =(data2)=>{
+            document.getElementById("date2").value = data2
+        }
+
+        window.onload = () => {
+            auth.onAuthStateChanged(function (user) {
+            if (!auth.currentUser)
+                window.location.href = "./login.html"
+            else
+                email = user.email;
+        })
+            const id = new URLSearchParams(window.location.search).get('id')
+
+            if (id) {
+                console.log(id)
+                getDoc(doc(db, "vacinas", id))
+                    .then((documento) => {
+                        setNome(documento.data().vacina)
+                        setDataVacina(documento.data().dataVacina)
+                        setDoseTipo(documento.data().doseTipo)
+                        setProximaDose(documento.data().proximaDose)
+                        //setUrlFoto(documento.data().urlFoto)
+                        //setPathFoto(documento.data().pathFoto)
+                        //getById("imagem").src = getUrlFoto()
+                    })
+                    .catch((error) => {
+                        console.log("Erro ao recuperar o documento: " + error)
+                    })
+
+
+            } else {
+                //getById("btnSalvar").style.display = 'none'
+                //getById("btnExcluir").style.display = 'none'
+            }
+
+            //getById("fileButton").addEventListener('change', function (event) {
+                //file = event.target.files[0]
+                //getById("imagem").src = URL.createObjectURL(file)
+            //})
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -34,7 +95,7 @@
                 <label for="date2">Proxima vacinação</label>
             </div>
             <div class="inputs">
-                <input type="date" name="" id="date">
+                <input type="text" id="date">
                 <input type="text" id="nome">
                 <div class="radios">
                     <input type="radio" name="dose" id="1a.dose" value="1a.dose" class="radio_text"><label
@@ -49,13 +110,14 @@
                         for="Dose unica">Dose unica</label>
                 </div>
                 <input type="image" value="" id="imagem" src="assets/image-comprovante.png">
-                <input type="date" name="" id="date2">
+                <input type="text" id="date2">
             </div>
         </form>
         <div>
             <a href="home.html"><button>Cadastrar</button></a>
-            <a href=""><button id="redbutton"><img src="assets/trash 2.svg" alt=""> Deletar</button></a></div>
+            <a href=""><button id="redbutton"><img src="assets/trash 2.svg" alt=""> Deletar</button></a>
         </div>
+    </div>
 </body>
 
 </html>

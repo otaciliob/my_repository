@@ -8,6 +8,32 @@
     <link rel="stylesheet" href="forms.css">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>MyHealth</title>
+
+    <script type="module">
+
+        import {app, auth} from './config.js'
+        import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"
+
+        const getEmail = () => {
+            return document.getElementById("email").value
+        }
+
+        const recuperarSenha = () => {
+            const email = getEmail()
+
+            sendPasswordResetEmail(auth, email)
+            .then(() => {
+                console.log('Solicitação realizada com sucesso')
+            })
+            .catch(() => {
+                console.log('Erro ao solicitar reset de senha')
+            })
+        }
+
+        window.onload = () => {
+            document.getElementById("redefinir-senha").addEventListener('click', recuperarSenha)
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -27,7 +53,7 @@
                 <input type="email" name="" id="email"><br><br>
             </div>
         </form>
-        <a href="login.html"><button>Redefinir Senha</button></a>
+        <a href="#"><button id="redefinir-senha">Redefinir Senha</button></a>
     </div>
 </body>
 </html>

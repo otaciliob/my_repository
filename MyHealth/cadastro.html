@@ -9,6 +9,70 @@
     <link rel="stylesheet" href="forms.css">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>MyHealth</title>
+
+    <script type="module">
+        import { app, auth, db, storage } from "./config.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"
+        import { addDoc, collection, getDoc, doc, updateDoc, deleteDoc,setDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+
+        const realizarCadastro = () => {
+            //console.log(senhaIgual())
+            const email = getEmail()
+            const senha = getSenha()
+
+            createUserWithEmailAndPassword(auth, email, senha)
+                .then((user) => {
+                    cadastrarDocumento()
+                })
+                .catch((error) => {
+                    console.log(error.message)
+                })
+
+
+        }
+        const cadastrarDocumento = () => {
+            //var date = new Date($('#date').val());
+            setDoc(doc(db,"usuarios",getEmail()),{
+            //addDoc(collection(db, "usuarios"), {
+                email: getEmail(),
+                nome: getNome(),
+                sexo: getSexo()
+                //dataNascimento:getDataNascimento()
+            }).then((result) => {
+                console.log(JSON.stringify(result))
+                window.location.href = "home.html"
+            }).catch((error) => {
+                console.log("erro")
+            })
+        }
+
+        const getNome = () => {
+            return document.getElementById('nome').value;
+        }
+        const getDataNascimento = () => {
+            return document.getElementById('data').value;
+        }
+        const getEmail = () => {
+            return document.getElementById('email').value;
+        }
+        const getSenha = () => {
+            return document.getElementById('senha').value;
+        }
+        const getSenha2 = () => {
+            return document.getElementById('senha2').value;
+        }
+        const getSexo = () => {
+            return document.querySelector('input[name="sexo"]:checked').value;
+        }
+        const senhaIgual = () => {
+            return getSenha() == getSenha2();
+        }
+
+        window.onload = () => {
+            document.getElementById('realizar-cadastro').addEventListener('click', realizarCadastro);
+        }
+    </script>
+
 </head>
 
 <body>
@@ -25,7 +89,7 @@
             <div class="labels">
                 <label for="nome">Nome Completo</label>
                 <label for="radios">Sexo</label>
-                <label for="date">Data de Nascimento</label>
+                <label for="data">Data de Nascimento</label>
                 <label for="email">E-mail</label>
                 <label for="senha">Senha</label>
                 <label for="senha2">Repetir Senha</label>
@@ -38,13 +102,13 @@
                     <input type="radio" name="sexo" id="female" value="feminino" class="radio_text"><label
                         for="female">feminino</label>
                 </div>
-                <input type="date" name="" id="date ">
+                <input type="date" name="data" id="data ">
                 <input type="email" name="" id="email">
                 <input type="password" name="" id="senha">
                 <input type="password" id="senha2">
             </div>
         </form>
-        <a href="login.html"><button>Entrar</button></a>
+        <a href="#"><button id="realizar-cadastro">Entrar</button></a>
     </div>
 </body>
 

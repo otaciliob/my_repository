@@ -9,6 +9,56 @@
     <link rel="stylesheet" href="forms.css">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre&display=swap" rel="stylesheet">
     <title>MyHealth</title>
+
+    <script type="module">
+        import { app, auth, db, storage } from './config.js';
+        import { signOut } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js"
+        import { addDoc, collection, getDoc, doc, updateDoc, deleteDoc,setDoc } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+
+        var Email;
+        auth.onAuthStateChanged(function (user) {
+            if (!auth.currentUser)
+                window.location.href = "./login.html"
+            else
+                Email = user.email;
+        })
+
+        const getNome = () => {
+            return document.getElementById('nome').value;
+        }
+        const getDate = () => {
+            return document.getElementById('date').value;
+        }
+        const getDate2 = () => {
+            return document.getElementById('date2').value;
+        }
+        const getTipoDose = () => {
+            return document.querySelector('input[name="dose"]:checked').value;
+        }
+
+        const cadastrarDocumento = () => {
+            //addDoc(doc(db,"vacinas",getNome()),{
+            addDoc(collection(db, "vacinas"), {
+                email: Email,//"otaciliobarbieri@gmail.com"
+                vacina: getNome(),
+                dataVacina: getDate(),
+                proximaDose: getDate2(),
+                doseTipo: getTipoDose(),
+
+                //dataNascimento:getDataNascimento()
+            }).then((result) => {
+                console.log(JSON.stringify(result))
+                window.location.href = "home.html"
+            }).catch((error) => {
+                console.log("erro")
+            })
+        }
+
+        window.onload = () => {
+            document.getElementById('cadastrar').addEventListener('click', cadastrarDocumento);
+        }
+
+    </script>    
 </head>
 
 <body>
@@ -34,7 +84,7 @@
                 <label for="date2">Proxima vacinação</label>
             </div>
             <div class="inputs">
-                <input type="date" name="" id="date">
+                <input type="text" id="date">
                 <input type="text" id="nome">
                 <div class="radios">
                     <input type="radio" name="dose" id="1a.dose" value="1a.dose" class="radio_text"><label
@@ -49,11 +99,11 @@
                         for="Dose unica">Dose unica</label>
                 </div>
                 <input type="image" value="" id="imagem" src="assets/image-comprovante.png">
-                <input type="date" name="" id="date2">
+                <input type="text" id="date2">
             </div>
         </form>
         <div>
-            <a href="home.html"><button>Cadastrar</button></a>
+            <a href="#"><button id="cadastrar">Cadastrar</button></a>
             <!-- <a href=""><button id="redbutton"><img src="assets/trash 2.svg" alt=""> Deletar</button></a></div>-->
         </div>
 </body>
