@@ -18,6 +18,19 @@
 
         var email;
         
+        const getNome =(nome)=>{
+            return document.getElementById("nome").value
+        }
+        const getDataVacina =(data1)=>{
+            return document.getElementById("date").value
+        }
+        const getDoseTipo =(doseTipo)=>{
+            return document.querySelector('input[name="dose"]:checked').value;
+        }
+        const getProximaDose =(data2)=>{
+            return document.getElementById("date2").value
+        }
+        
         const setNome =(nome)=>{
             document.getElementById("nome").value = nome
         }
@@ -30,15 +43,40 @@
         const setProximaDose =(data2)=>{
             document.getElementById("date2").value = data2
         }
+        
+        const deletarVacina =()=>{
+            deleteDoc(doc(db,"vacinas",id)).then(()=>{
+                window.location.href = "home.html"
+            }).catch((error)=>{
+                console.log("error ao deletar: " + error)
+            })
+        }
 
+        const atualizarVacina =()=>{
+            updateDoc(doc(db, "vacinas", id), {
+                vacina: getNome(),
+                dataVacina: getDataVacina(),
+                proximaDose: getProximaDose(),
+                doseTipo: getDoseTipo(),
+            }).then((result) => {
+                console.log(JSON.stringify(result))
+                window.location.href = "home.html"
+            }).catch((error) => {
+                console.log("erro")
+            })
+        }
+        
+        var id;
         window.onload = () => {
+            document.getElementById('deletar').addEventListener('click', deletarVacina);
+            document.getElementById('salvar').addEventListener('click', atualizarVacina);
             auth.onAuthStateChanged(function (user) {
             if (!auth.currentUser)
                 window.location.href = "./login.html"
             else
                 email = user.email;
         })
-            const id = new URLSearchParams(window.location.search).get('id')
+            id = new URLSearchParams(window.location.search).get('id')
 
             if (id) {
                 console.log(id)
@@ -55,8 +93,6 @@
                     .catch((error) => {
                         console.log("Erro ao recuperar o documento: " + error)
                     })
-
-
             } else {
                 //getById("btnSalvar").style.display = 'none'
                 //getById("btnExcluir").style.display = 'none'
@@ -114,8 +150,8 @@
             </div>
         </form>
         <div>
-            <a href="home.html"><button>Cadastrar</button></a>
-            <a href=""><button id="redbutton"><img src="assets/trash 2.svg" alt=""> Deletar</button></a>
+            <button id="salvar">Salvar</button>
+            <button id="deletar"><img src="assets/trash 2.svg" alt=""> Deletar</button>
         </div>
     </div>
 </body>

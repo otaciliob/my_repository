@@ -37,7 +37,6 @@
         }
 
         const cadastrarDocumento = () => {
-            //addDoc(doc(db,"vacinas",getNome()),{
             addDoc(collection(db, "vacinas"), {
                 email: Email,//"otaciliobarbieri@gmail.com"
                 vacina: getNome(),

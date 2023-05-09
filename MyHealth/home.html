@@ -47,10 +47,10 @@
         }
 
         const createCard = (nome, data1, dose, proximaDose,id) => {
-            let cards = document.createElement("div");
+            let cards = document.createElement("a");
             cards.setAttribute("class", "card");
-            cards.appendChild(document.createElement("a")).innerHTML = nome;
-            cards.children[0].setAttribute("href", "editarvacina.html?id="+id);
+            cards.setAttribute("href", "editarvacina.html?id="+id);
+            cards.appendChild(document.createElement("div")).innerHTML = nome;
             cards.children[0].setAttribute("class", "nome");
             cards.appendChild(document.createElement("div")).innerHTML = dose;
             cards.children[1].setAttribute("class", "tipo_dose");
@@ -59,7 +59,6 @@
             cards.appendChild(document.createElement("img")).setAttribute("src", "assets/image-comprovante.png");
             cards.appendChild(document.createElement("div")).innerHTML = proximaDose;
             cards.children[4].setAttribute("class", "proxima_dose");
-
 
             return cards;
         }
@@ -79,8 +78,6 @@
             })
             
         }
-
-
 
         const deslogar = () => {
             signOut(auth)
