@@ -26,6 +26,9 @@ export class AppController {
 
   @Get('myhealth')
   @Redirect('hbs')
+  red(){
+    return '';
+  }
 
   /*@Get(':id')
     findOne(@Param('id') id: string): string {
