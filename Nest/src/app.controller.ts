@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, Render, Response  } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Render, Body, Redirect  } from '@nestjs/common';
 import { AppService } from './app.service';
 import { response } from 'express';
 
@@ -11,29 +11,23 @@ export class AppController {
   /*@Get()
   getHello(): string {
     return this.appService.getHello();
-<<<<<<< HEAD
   }*/
   
   @Get('hbs')
-=======
-  }
-  @Get('hbs')//template hbs
->>>>>>> 5c38638278ed58355bef97f8a6881f40cae2091a
   @Render('index.hbs')
   root(){
     return {message: 'MyHealth'}
   }
-<<<<<<< HEAD
 
-  @Post('auth/obj')
-  getObj(@Response() response: Response){
+  @Post('hbs')
+  getObj(@Body('nome')nome: string){
     return this.appService.postYou(null);
   }
 
+  @Get('myhealth')
+  @Redirect('hbs')
+
   /*@Get(':id')
-=======
-  @Get('?:id')//req.params
->>>>>>> 5c38638278ed58355bef97f8a6881f40cae2091a
     findOne(@Param('id') id: string): string {
       return this.appService.getYou(id);
   }*/
