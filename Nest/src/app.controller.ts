@@ -19,11 +19,6 @@ export class AppController {
     return {message: 'MyHealth'}
   }
 
-  @Post('hbs')
-  getObj(@Body('nome')nome: string){
-    return this.appService.postYou(null);
-  }
-
   @Get('myhealth')
   @Redirect('hbs')
   red(){
